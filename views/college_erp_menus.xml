@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- main menu -->
-    <menuitem id="menu_college_erp_root" name="College ERP" sequence="10" groups="college_erp.group_college_erp_user"/>
+    <menuitem
+        id="menu_college_erp_root"
+        name="College ERP"
+        sequence="10"
+        groups="college_erp.group_college_erp_user"
+        web_icon="college_erp,static/description/icon.png"/>
     <!-- sub menu  -->
     <menuitem
         id="menu_college_erp_students_management"

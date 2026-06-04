@@ -1,6 +1,6 @@
 {
     'name': 'College ERP',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'license': 'LGPL-3',
     'author': 'Najoom Al Thuraya',
     'website': 'https://althurayauae.com/',
@@ -12,6 +12,8 @@
     'depends': ['base'],
     'installable': True,
     'data': [
+        'security/college_erp_security.xml',
+        'security/ir.model.access.csv',
         'views/college_students_views.xml',
         'views/college_erp_menus.xml',
     ],

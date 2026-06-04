@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_college_erp_root" name="College ERP" sequence="10" />
-
+    <!-- main menu -->
+    <menuitem id="menu_college_erp_root" name="College ERP" sequence="10" groups="college_erp.group_college_erp_user"/>
+    <!-- sub menu  -->
     <menuitem
         id="menu_college_erp_students_management"
         name="Students Management"
-        parent="menu_college_erp_root"
-        action="action_college_students"
-        sequence="10" />
+        parent="menu_college_erp_root" />
+
+    <!-- submenu with action -->
+
+    <menuitem
+        id="menu_college_erp_students"
+        name="Students"
+        parent="menu_college_erp_students_management"
+        action="action_college_students" />
 </odoo>

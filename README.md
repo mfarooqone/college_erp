@@ -5,7 +5,7 @@
 
 **Odoo 19 Community addon** for college and institute management — student records, admissions, and education workflows.
 
-Repository: [github.com/mfarooqone/odoo19_college_erp](https://github.com/mfarooqone/odoo19_college_erp)
+Repository: [github.com/mfarooqone/college_erp](https://github.com/mfarooqone/college_erp)
 
 ---
 
@@ -34,29 +34,32 @@ _Add screenshots of the Students list and form views here._
 
 ## Installation
 
-### 1. Clone the repository
+### 1. Clone into your addons directory
+
+Clone this repository so the folder name matches the technical module name `college_erp`:
 
 ```bash
-git clone https://github.com/mfarooqone/odoo19_college_erp.git
+cd /path/to/your/odoo/custom_addon
+git clone https://github.com/mfarooqone/college_erp.git college_erp
 ```
 
-### 2. Add the module to your addons path
+### 2. Add the addons path in `odoo.conf`
 
-Copy the `college_erp` folder into your Odoo addons directory, **or** add this repository path to `addons_path` in `odoo.conf`:
+Ensure the **parent** directory of the module is on `addons_path` (not the repo URL alone):
 
 ```ini
-addons_path = /path/to/odoo/addons,/path/to/odoo19_college_erp
+addons_path = /path/to/odoo/addons,/path/to/odoo/custom_addon
 ```
 
-Expected layout:
+After cloning, the layout should look like:
 
 ```text
-odoo19_college_erp/
-├── README.md
-├── .gitignore
-└── college_erp/          ← Odoo module (technical name)
+custom_addon/
+└── college_erp/              ← this repository (Odoo module root)
     ├── __init__.py
     ├── __manifest__.py
+    ├── README.md
+    ├── .gitignore
     ├── models/
     └── views/
 ```
@@ -76,9 +79,31 @@ odoo19_college_erp/
 ./odoo-bin -c odoo.conf -d YOUR_DATABASE -i college_erp --stop-after-init
 ```
 
+Upgrade after pulling changes:
+
+```bash
+./odoo-bin -c odoo.conf -d YOUR_DATABASE -u college_erp --stop-after-init
+```
+
 ### 4. Open the app
 
 Go to **College ERP → Students Management** and create your first student.
+
+---
+
+## Development
+
+This folder is both the Odoo module and the Git repository root. Typical workflow:
+
+```bash
+cd /path/to/custom_addon/college_erp
+# edit models, views, manifest...
+git add .
+git commit -m "feat: your change"
+git push origin main
+```
+
+Do not commit `__pycache__`, virtualenvs, or local secrets (see `.gitignore`).
 
 ---
 
@@ -136,7 +161,7 @@ college_erp/
 
 ## Contributing
 
-1. Fork the repository
+1. Fork [college_erp](https://github.com/mfarooqone/college_erp)
 2. Create a feature branch (`git checkout -b feature/my-feature`)
 3. Commit your changes (`git commit -m "feat: add my feature"`)
 4. Push to the branch (`git push origin feature/my-feature`)

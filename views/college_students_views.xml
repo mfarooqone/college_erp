@@ -7,6 +7,7 @@
          <list>
             <field name="admission_number" />
             <field name="name" />
+            <field name="program" optional="show" />
             <field name="gender" />
             <field name="email" />
             <field name="phone" />
@@ -28,26 +29,64 @@
                   <h1>
                      <field name="name" placeholder="Student name" />
                   </h1>
+                  <h3>
+                     <field name="admission_number" placeholder="Admission number" />
+                  </h3>
                </div>
                <group>
                   <group>
-                     <field name="admission_number" />
                      <field name="admission_date" />
                      <field name="gender" />
-                  </group>
-                  <group>
-                     <field name="email" />
-                     <field name="phone" />
                      <field name="age" />
                   </group>
                </group>
-               <group string="Address">
-                  <field name="communication_address" placeholder="Communication address" />
-                  <field name="same_as_communication" widget="boolean_toggle" />
-                  <field name="permanent_address"
-                     invisible="same_as_communication"
-                     placeholder="Permanent address" />
-               </group>
+               <notebook>
+                  <page string="Personal Information" name="personal">
+                     <group>
+                        <group string="Contact">
+                           <field name="email" widget="email" />
+                           <field name="phone" widget="phone" />
+                        </group>
+                     </group>
+                  </page>
+                  <page string="Admission" name="admission">
+                     <group string="Admission Details">
+                        <field name="admission_number" />
+                        <field name="admission_date" />
+                     </group>
+                  </page>
+                  <page string="Address" name="address">
+                     <group string="Address">
+                        <field name="communication_address" placeholder="Communication address" />
+                        <field name="same_as_communication" widget="boolean_toggle" />
+                        <field name="permanent_address"
+                           invisible="same_as_communication"
+                           placeholder="Permanent address" />
+                     </group>
+                  </page>
+                  <page string="Academic" name="academic">
+                     <group>
+                        <group string="Program Details">
+                           <field name="program" />
+                           <field name="batch" />
+                           <field name="semester" />
+                        </group>
+                     </group>
+                  </page>
+                  <page string="Guardian" name="guardian">
+                     <group>
+                        <group string="Guardian / Parent">
+                           <field name="guardian_name" />
+                           <field name="guardian_relation" />
+                           <field name="guardian_phone" widget="phone" />
+                           <field name="guardian_email" widget="email" />
+                        </group>
+                     </group>
+                  </page>
+                  <page string="Notes" name="notes">
+                     <field name="notes" placeholder="Internal remarks, documents pending, etc." />
+                  </page>
+               </notebook>
             </sheet>
          </form>
       </field>

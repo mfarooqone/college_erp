@@ -20,6 +20,34 @@ class CollegeStudents(models.Model):
     )
     admission_number = fields.Char(string='Admission Number', required=True)
     admission_date = fields.Date(string='Admission Date', required=True)
+    program = fields.Char(string='Program / Course')
+    batch = fields.Char(string='Batch')
+    semester = fields.Selection(
+        string='Semester',
+        selection=[
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4', '4'),
+            ('5', '5'),
+            ('6', '6'),
+            ('7', '7'),
+            ('8', '8'),
+        ],
+    )
+    guardian_name = fields.Char(string='Guardian Name')
+    guardian_relation = fields.Selection(
+        string='Relation',
+        selection=[
+            ('father', 'Father'),
+            ('mother', 'Mother'),
+            ('guardian', 'Guardian'),
+            ('other', 'Other'),
+        ],
+    )
+    guardian_phone = fields.Char(string='Guardian Phone')
+    guardian_email = fields.Char(string='Guardian Email')
+    notes = fields.Text(string='Internal Notes')
 
     @api.onchange('same_as_communication', 'communication_address')
     def _onchange_same_as_communication(self):

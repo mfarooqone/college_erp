@@ -1,20 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+   <!-- search view -->
+   <record id="view_college_students_search" model="ir.ui.view">
+      <field name="name">college.students.search</field>
+      <field name="model">college.students</field>
+      <field name="arch" type="xml">
+         <search string="Students">
+            <field name="name" />
+            <field name="admission_number" />
+            <field name="program" />
+            <field name="batch" />
+            <field name="email" />
+            <field name="phone" />
+            <separator />
+            <filter name="male" string="Male" domain="[('gender', '=', 'male')]" />
+            <filter name="female" string="Female" domain="[('gender', '=', 'female')]" />
+            <separator />
+            <group>
+               <filter name="group_gender" string="Gender" context="{'group_by': 'gender'}" />
+               <filter name="group_program" string="Program" context="{'group_by': 'program'}" />
+               <filter name="group_batch" string="Batch" context="{'group_by': 'batch'}" />
+               <filter name="group_semester" string="Semester" context="{'group_by': 'semester'}" />
+            </group>
+         </search>
+      </field>
+   </record>
+
+   <!-- kanban view -->
+
+   <record id="view_college_students_kanban" model="ir.ui.view">
+      <field name="name">college.students.kanban</field>
+      <field name="model">college.students</field>
+      <field name="arch" type="xml">
+         <kanban sample="1">
+            <field name="image_128" />
+            <field name="name" />
+            <field name="admission_number" />
+            <field name="program" />
+            <field name="batch" />
+            <field name="semester" />
+            <field name="gender" />
+            <field name="email" />
+            <field name="phone" />
+            <templates>
+               <t t-name="card" class="flex-row">
+                  <aside class="o_kanban_aside_full">
+                     <field name="image_128" widget="image" class="w-100"
+                        options="{'img_class': 'object-fit-cover'}" />
+                  </aside>
+                  <main class="ps-2">
+                     <field name="name" class="fw-bold fs-5" />
+                     <div t-if="record.admission_number.raw_value" class="text-muted">
+                        <i class="fa fa-fw me-1 fa-id-card text-primary" title="Admission Number" />
+                        <field name="admission_number" />
+                     </div>
+                     <div t-if="record.program.raw_value" class="text-truncate">
+                        <i class="fa fa-fw me-1 fa-graduation-cap text-primary" title="Program" />
+                        <field name="program" />
+                     </div>
+                     <div t-if="record.batch.raw_value or record.semester.raw_value">
+                        <i class="fa fa-fw me-1 fa-users text-primary" title="Batch" />
+                        <field name="batch" />
+                        <span t-if="record.batch.raw_value and record.semester.raw_value"> · </span>
+                        <span t-if="record.semester.raw_value">Sem </span>
+                        <field name="semester" />
+                     </div>
+                     <div t-if="record.email.raw_value" class="text-truncate">
+                        <i class="fa fa-fw me-1 fa-envelope text-primary" title="Email" />
+                        <field name="email" />
+                     </div>
+                     <div t-if="record.phone.raw_value">
+                        <i class="fa fa-fw me-1 fa-phone text-primary" title="Phone" />
+                        <field name="phone" />
+                     </div>
+                  </main>
+               </t>
+            </templates>
+         </kanban>
+      </field>
+   </record>
+
+   <!-- list view -->
+
    <record id="view_college_students_list" model="ir.ui.view">
       <field name="name">college.students.list</field>
       <field name="model">college.students</field>
       <field name="arch" type="xml">
-         <list>
+         <list string="Students" sample="1">
+            <field name="image_128" widget="image" optional="show" />
             <field name="admission_number" />
             <field name="name" />
             <field name="program" optional="show" />
-            <field name="gender" />
-            <field name="email" />
-            <field name="phone" />
+            <field name="batch" optional="hide" />
+            <field name="semester" optional="hide" />
+            <field name="gender" optional="show" />
+            <field name="email" optional="show" />
+            <field name="phone" optional="show" />
             <field name="admission_date" />
          </list>
       </field>
    </record>
+
+   <!-- form view -->
 
    <record id="view_college_students_form" model="ir.ui.view">
       <field name="name">college.students.form</field>
@@ -92,10 +179,12 @@
       </field>
    </record>
 
+   <!-- action views -->
+
    <record id="action_college_students" model="ir.actions.act_window">
       <field name="name">Students</field>
       <field name="res_model">college.students</field>
-      <field name="view_mode">list,form</field>
+      <field name="view_mode">kanban,list,form</field>
       <field name="help" type="html">
          <p class="o_view_nocontent_smiling_face">
             Create a new student
@@ -103,10 +192,11 @@
       </field>
    </record>
 
+
    <record id="action_college_admission" model="ir.actions.act_window">
       <field name="name">Admission</field>
       <field name="res_model">college.students</field>
-      <field name="view_mode">list,form</field>
+      <field name="view_mode">kanban,list,form</field>
       <field name="help" type="html">
          <p class="o_view_nocontent_smiling_face">
             Register a new admission

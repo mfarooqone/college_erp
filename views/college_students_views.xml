@@ -21,9 +21,16 @@
       <field name="arch" type="xml">
          <form>
             <sheet>
+               <field name="image_1920" widget="image" class="oe_avatar"
+                  options="{'preview_image': 'image_128'}" />
+               <div class="oe_title">
+                  <label for="name" />
+                  <h1>
+                     <field name="name" placeholder="Student name" />
+                  </h1>
+               </div>
                <group>
                   <group>
-                     <field name="name" />
                      <field name="admission_number" />
                      <field name="admission_date" />
                      <field name="gender" />
@@ -34,8 +41,12 @@
                      <field name="age" />
                   </group>
                </group>
-               <group>
-                  <field name="address" />
+               <group string="Address">
+                  <field name="communication_address" placeholder="Communication address" />
+                  <field name="same_as_communication" widget="boolean_toggle" />
+                  <field name="permanent_address"
+                     invisible="same_as_communication"
+                     placeholder="Permanent address" />
                </group>
             </sheet>
          </form>
@@ -49,6 +60,17 @@
       <field name="help" type="html">
          <p class="o_view_nocontent_smiling_face">
             Create a new student
+         </p>
+      </field>
+   </record>
+
+   <record id="action_college_admission" model="ir.actions.act_window">
+      <field name="name">Admission</field>
+      <field name="res_model">college.students</field>
+      <field name="view_mode">list,form</field>
+      <field name="help" type="html">
+         <p class="o_view_nocontent_smiling_face">
+            Register a new admission
          </p>
       </field>
    </record>

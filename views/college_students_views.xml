@@ -87,7 +87,8 @@
       <field name="model">college.students</field>
       <field name="arch" type="xml">
          <list string="Students" sample="1">
-            <field name="image_128" widget="image" optional="show" />
+            <field name="image_128" widget="image" optional="show" nolabel="1" width="40"
+               options="{'size': [40, 40], 'img_class': 'rounded-circle object-fit-cover'}"/>
             <field name="admission_number" />
             <field name="name" />
             <field name="program" optional="show" />

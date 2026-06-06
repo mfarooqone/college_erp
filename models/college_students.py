@@ -24,11 +24,18 @@ class CollegeStudents(models.Model):
         ('8', '8'),
     ]
 
-    GUARDIAN_RELATION_SELECTION= [
+    GUARDIAN_RELATION_SELECTION = [
         ('father', 'Father'),
         ('mother', 'Mother'),
         ('guardian', 'Guardian'),
         ('other', 'Other'),
+    ]
+
+    _COMM_ADDRESS_FIELDS = [
+        'comm_street', 'comm_street2', 'comm_city', 'comm_state_id', 'comm_zip', 'comm_country_id',
+    ]
+    _PERM_ADDRESS_FIELDS = [
+        'perm_street', 'perm_street2', 'perm_city', 'perm_state_id', 'perm_zip', 'perm_country_id',
     ]
 
     partner_id = fields.Many2one(
@@ -44,12 +51,34 @@ class CollegeStudents(models.Model):
     gender = fields.Selection(string='Gender', selection=[('male', 'Male'), ('female', 'Female')])
     email = fields.Char(string='Email')
     phone = fields.Char(string='Phone')
-    communication_address = fields.Text(string='Communication Address')
-    permanent_address = fields.Text(string='Permanent Address')
+
+    comm_street = fields.Char(string='Communication Street')
+    comm_street2 = fields.Char(string='Communication Street 2')
+    comm_city = fields.Char(string='Communication City')
+    comm_country_id = fields.Many2one('res.country', string='Communication Country')
+    comm_state_id = fields.Many2one(
+        'res.country.state',
+        string='Communication State',
+        domain="[('country_id', '=?', comm_country_id)]",
+    )
+    comm_zip = fields.Char(string='Communication ZIP')
+
+    perm_street = fields.Char(string='Permanent Street')
+    perm_street2 = fields.Char(string='Permanent Street 2')
+    perm_city = fields.Char(string='Permanent City')
+    perm_country_id = fields.Many2one('res.country', string='Permanent Country')
+    perm_state_id = fields.Many2one(
+        'res.country.state',
+        string='Permanent State',
+        domain="[('country_id', '=?', perm_country_id)]",
+    )
+    perm_zip = fields.Char(string='Permanent ZIP')
+
     same_as_communication = fields.Boolean(
-        string='same as communication address',
+        string='Permanent address same as communication address',
         default=True,
     )
+
     admission_number = fields.Char(string='Admission Number', required=True)
     admission_date = fields.Date(string='Admission Date', required=True)
     program = fields.Selection(
@@ -70,6 +99,47 @@ class CollegeStudents(models.Model):
     guardian_email = fields.Char(string='Guardian Email')
     notes = fields.Text(string='Internal Notes')
 
+    def _get_address_values(self, prefix):
+        self.ensure_one()
+        return {
+            f'{prefix}_street': getattr(self, f'{prefix}_street'),
+            f'{prefix}_street2': getattr(self, f'{prefix}_street2'),
+            f'{prefix}_city': getattr(self, f'{prefix}_city'),
+            f'{prefix}_state_id': getattr(self, f'{prefix}_state_id').id if getattr(self, f'{prefix}_state_id') else False,
+            f'{prefix}_zip': getattr(self, f'{prefix}_zip'),
+            f'{prefix}_country_id': getattr(self, f'{prefix}_country_id').id if getattr(self, f'{prefix}_country_id') else False,
+        }
+
+    def _sync_permanent_from_communication(self):
+        for student in self.filtered('same_as_communication'):
+            comm_vals = student._get_address_values('comm')
+            perm_vals = {
+                perm_field: comm_vals[comm_field]
+                for comm_field, perm_field in zip(self._COMM_ADDRESS_FIELDS, self._PERM_ADDRESS_FIELDS)
+            }
+            if any(student[f] != perm_vals[f] for f in self._PERM_ADDRESS_FIELDS):
+                super(CollegeStudents, student).write(perm_vals)
+
+    @api.onchange('comm_country_id')
+    def _onchange_comm_country_id(self):
+        if self.comm_country_id and self.comm_state_id.country_id != self.comm_country_id:
+            self.comm_state_id = False
+
+    @api.onchange('comm_state_id')
+    def _onchange_comm_state_id(self):
+        if self.comm_state_id.country_id and self.comm_country_id != self.comm_state_id.country_id:
+            self.comm_country_id = self.comm_state_id.country_id
+
+    @api.onchange('perm_country_id')
+    def _onchange_perm_country_id(self):
+        if self.perm_country_id and self.perm_state_id.country_id != self.perm_country_id:
+            self.perm_state_id = False
+
+    @api.onchange('perm_state_id')
+    def _onchange_perm_state_id(self):
+        if self.perm_state_id.country_id and self.perm_country_id != self.perm_state_id.country_id:
+            self.perm_country_id = self.perm_state_id.country_id
+
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
         if not self.partner_id:
@@ -80,25 +150,33 @@ class CollegeStudents(models.Model):
         self.phone = partner.phone or partner.mobile
         if partner.image_1920:
             self.image_1920 = partner.image_1920
-        address_parts = [
-            part for part in (
-                partner.street,
-                partner.street2,
-                partner.city,
-                partner.state_id.name if partner.state_id else False,
-                partner.zip,
-                partner.country_id.name if partner.country_id else False,
-            ) if part
-        ]
-        if address_parts:
-            self.communication_address = ', '.join(address_parts)
-            if self.same_as_communication:
-                self.permanent_address = self.communication_address
-
-    @api.onchange('same_as_communication', 'communication_address')
-    def _onchange_same_as_communication(self):
+        self.comm_street = partner.street
+        self.comm_street2 = partner.street2
+        self.comm_city = partner.city
+        self.comm_state_id = partner.state_id
+        self.comm_zip = partner.zip
+        self.comm_country_id = partner.country_id
         if self.same_as_communication:
-            self.permanent_address = self.communication_address
+            self.perm_street = partner.street
+            self.perm_street2 = partner.street2
+            self.perm_city = partner.city
+            self.perm_state_id = partner.state_id
+            self.perm_zip = partner.zip
+            self.perm_country_id = partner.country_id
+
+    @api.onchange(
+        'same_as_communication',
+        'comm_street', 'comm_street2', 'comm_city', 'comm_state_id', 'comm_zip', 'comm_country_id',
+    )
+    def _onchange_same_as_communication(self):
+        if not self.same_as_communication:
+            return
+        self.perm_street = self.comm_street
+        self.perm_street2 = self.comm_street2
+        self.perm_city = self.comm_city
+        self.perm_state_id = self.comm_state_id
+        self.perm_zip = self.comm_zip
+        self.perm_country_id = self.comm_country_id
 
     def action_open_partner(self):
         self.ensure_one()
@@ -115,14 +193,14 @@ class CollegeStudents(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get('same_as_communication'):
-                vals['permanent_address'] = vals.get('communication_address')
-        return super().create(vals_list)
+                for comm_field, perm_field in zip(self._COMM_ADDRESS_FIELDS, self._PERM_ADDRESS_FIELDS):
+                    vals.setdefault(perm_field, vals.get(comm_field))
+        students = super().create(vals_list)
+        students._sync_permanent_from_communication()
+        return students
 
     def write(self, vals):
         res = super().write(vals)
-        for student in self.filtered('same_as_communication'):
-            if student.permanent_address != student.communication_address:
-                super(CollegeStudents, student).write({
-                    'permanent_address': student.communication_address,
-                })
+        if vals.get('same_as_communication') or any(field in vals for field in self._COMM_ADDRESS_FIELDS):
+            self._sync_permanent_from_communication()
         return res

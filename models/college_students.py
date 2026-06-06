@@ -5,6 +5,14 @@ class CollegeStudents(models.Model):
     _name = 'college.students'
     _description = 'College student details'
 
+    PROGRAM_SELECTION = [
+        ('computer_science', 'Computer Science'),
+        ('information_technology', 'Information Technology'),
+        ('software_engineering', 'Software Engineering'),
+        ('business_administration', 'Business Administration'),
+        ('electrical_engineering', 'Electrical Engineering'),
+    ]
+
     partner_id = fields.Many2one(
         'res.partner',
         string='Contact',
@@ -26,7 +34,10 @@ class CollegeStudents(models.Model):
     )
     admission_number = fields.Char(string='Admission Number', required=True)
     admission_date = fields.Date(string='Admission Date', required=True)
-    program = fields.Char(string='Program / Course')
+    program = fields.Selection(
+        string='Program',
+        selection=PROGRAM_SELECTION,
+    )
     batch = fields.Char(string='Batch')
     semester = fields.Selection(
         string='Semester',

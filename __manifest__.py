@@ -1,6 +1,6 @@
 {
     'name': 'College ERP',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'license': 'LGPL-3',
     'author': 'Najoom Al Thuraya',
     'website': 'https://althurayauae.com/',
@@ -9,11 +9,12 @@
     'description': """Form student admission to gradution, this cover all aspects of college management""",
     'sequence': -10,
     'application': True,
-    'depends': ['base'],
+    'depends': ['base', 'contacts'],
     'installable': True,
     'data': [
         'security/college_erp_security.xml',
         'security/ir.model.access.csv',
+        'views/college_contacts_views.xml',
         'views/college_students_views.xml',
         'views/college_erp_menus.xml',
     ],

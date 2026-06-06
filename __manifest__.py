@@ -18,4 +18,9 @@
         'views/college_students_views.xml',
         'views/college_erp_menus.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'college_erp/static/src/scss/college_students_list.scss',
+        ],
+    },
 }

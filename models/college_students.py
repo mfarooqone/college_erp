@@ -13,6 +13,24 @@ class CollegeStudents(models.Model):
         ('electrical_engineering', 'Electrical Engineering'),
     ]
 
+    SEMESTER_SELECTION = [
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+        ('7', '7'),
+        ('8', '8'),
+    ]
+
+    GUARDIAN_RELATION_SELECTION= [
+        ('father', 'Father'),
+        ('mother', 'Mother'),
+        ('guardian', 'Guardian'),
+        ('other', 'Other'),
+    ]
+
     partner_id = fields.Many2one(
         'res.partner',
         string='Contact',
@@ -41,26 +59,12 @@ class CollegeStudents(models.Model):
     batch = fields.Char(string='Batch')
     semester = fields.Selection(
         string='Semester',
-        selection=[
-            ('1', '1'),
-            ('2', '2'),
-            ('3', '3'),
-            ('4', '4'),
-            ('5', '5'),
-            ('6', '6'),
-            ('7', '7'),
-            ('8', '8'),
-        ],
+        selection=SEMESTER_SELECTION,
     )
     guardian_name = fields.Char(string='Guardian Name')
     guardian_relation = fields.Selection(
         string='Relation',
-        selection=[
-            ('father', 'Father'),
-            ('mother', 'Mother'),
-            ('guardian', 'Guardian'),
-            ('other', 'Other'),
-        ],
+        selection=GUARDIAN_RELATION_SELECTION,
     )
     guardian_phone = fields.Char(string='Guardian Phone')
     guardian_email = fields.Char(string='Guardian Email')

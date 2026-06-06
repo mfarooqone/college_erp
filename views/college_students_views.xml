@@ -86,8 +86,9 @@
       <field name="name">college.students.list</field>
       <field name="model">college.students</field>
       <field name="arch" type="xml">
-         <list string="Students" sample="1">
-            <field name="image_128" widget="image" optional="show" />
+         <list string="Students" sample="1" class="o_college_student_list">
+            <field name="image_128" widget="image" optional="show" nolabel="1" width="50"
+               options="{'size': [32, 32], 'img_class': 'o_avatar rounded-circle'}" />
             <field name="admission_number" />
             <field name="name" />
             <field name="program" optional="show" />
@@ -110,7 +111,7 @@
          <form>
             <header>
                <button name="action_open_partner" type="object" string="Contact"
-                  class="oe_highlight" icon="fa-address-book" invisible="not partner_id"/>
+                  class="oe_highlight" icon="fa-address-book" invisible="not partner_id" />
             </header>
             <sheet>
                <field name="image_1920" widget="image" class="oe_avatar"
@@ -137,7 +138,7 @@
                         <group string="Linked Contact">
                            <field name="partner_id"
                               context="{'default_is_company': False, 'default_type': 'contact'}"
-                              options="{'no_quick_create': False}"/>
+                              options="{'no_quick_create': False}" />
                            <field name="email" widget="email" />
                            <field name="phone" widget="phone" />
                         </group>

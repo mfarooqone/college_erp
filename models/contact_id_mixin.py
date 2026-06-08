@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from odoo import api, models
 
-# contact_type -> (sequence code, partner field, prefix)
+# Each contact type: sequence code, field on partner, and ID prefix (CUST/, VEND/, EMP/)
 CONTACT_SEQUENCES = {
     'customer': ('customer.id', 'customer_id', 'CUST/'),
     'vendor': ('vendor.id', 'vendor_id', 'VEND/'),
@@ -50,7 +50,7 @@ class ContactIdMixin(models.AbstractModel):
 
     @api.model
     def _sync_all_contact_sequences(self):
-        """Module upgrade hook: repair duplicates and realign sequence counters."""
+        """Called on module upgrade — fixes any duplicate IDs and resets the counters."""
         for contact_type, (code, field, prefix) in CONTACT_SEQUENCES.items():
             self._fix_duplicate_ids(contact_type)
             self._bump_sequence(code, field, prefix)

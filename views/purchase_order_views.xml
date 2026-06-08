@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <!-- Show VEND/00001 in RFQ & purchase order list views -->
+   <!-- Vendor ID on RFQs and purchase orders -->
+
    <record id="view_purchase_order_tree_inherit_vendor_id" model="ir.ui.view">
       <field name="name">purchase.order.list.inherit.vendor.id</field>
       <field name="model">purchase.order</field>
@@ -13,7 +14,7 @@
       </field>
    </record>
 
-   <!-- Same column on the purchase dashboard list (RFQ screen) -->
+   <!-- RFQ dashboard uses a separate list view -->
    <record id="view_purchase_order_kpis_tree_inherit_vendor_id" model="ir.ui.view">
       <field name="name">purchase.order.kpis.list.inherit.vendor.id</field>
       <field name="model">purchase.order</field>
@@ -25,7 +26,6 @@
       </field>
    </record>
 
-   <!-- Show vendor ID on kanban card under the vendor name -->
    <record id="view_purchase_order_kanban_inherit_vendor_id" model="ir.ui.view">
       <field name="name">purchase.order.kanban.inherit.vendor.id</field>
       <field name="model">purchase.order</field>

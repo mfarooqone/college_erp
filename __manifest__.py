@@ -12,23 +12,14 @@
     'depends': ['base', 'contacts', 'account', 'sale', 'purchase','hr'],
     'installable': True,
     'data': [
-        # ---------------------------------------------------------------------------- #
-        #                                   security                                   #
-        # ---------------------------------------------------------------------------- #
         'security/college_erp_security.xml',
         'security/ir.model.access.csv',
-        # ---------------------------------------------------------------------------- #
-        #                                     views                                    #
-        # ---------------------------------------------------------------------------- #
         'views/college_students_views.xml',
         'views/college_erp_menus.xml',
         'views/res_partner_views.xml',
         'views/sale_order_views.xml',
         'views/purchase_order_views.xml',
         'views/hr_employee_views.xml',
-        # ---------------------------------------------------------------------------- #
-        #                                   data seq                                   #
-        # ---------------------------------------------------------------------------- #
         'data/ir_sequence_data.xml',
         'data/ir_sequence_sync.xml',
     ],

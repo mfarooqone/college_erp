@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- main menu -->
+    <!-- Root menu -->
     <menuitem
         id="menu_college_erp_root"
         name="College ERP"
         sequence="10"
         groups="college_erp.group_college_erp_user"
         web_icon="college_erp,static/description/icon.png" />
-    <!-- sub menu  -->
+    <!-- Students section -->
     <menuitem
         id="menu_college_erp_students_management"
         name="Students"
         parent="menu_college_erp_root" />
-
-    <!-- submenu with action -->
 
     <menuitem
         id="menu_college_erp_students"
         name="Students"
         parent="menu_college_erp_students_management"
         action="action_college_students" />
-    <!-- submenu with action -->
-
     <menuitem
         id="menu_college_erp_admission"
         name="Admission"

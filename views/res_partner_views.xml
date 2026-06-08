@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <!-- Contacts: contact_type + auto IDs across form, list, kanban, search, and menus -->
+   <!-- Contact views — type, auto ID, filters -->
 
-   <!-- Kanban: badge under contact name -->
+   <!-- Kanban -->
    <record id="view_partner_kanban_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.kanban.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -19,19 +19,19 @@
             <div class="mb-1">
                <field name="contact_type" widget="badge" />
             </div>
-            <!-- Contacts app: one ID field -->
+            <!-- Contacts app — one shared ID field -->
             <div t-if="record.contact_code.raw_value" class="text-truncate mb-1"
                invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')">
                <i class="fa fa-fw me-1 fa-id-card text-primary" title="ID" />
                <field name="contact_code" />
             </div>
-            <!-- Sales > Customers -->
+            <!-- Sales → Customers menu -->
             <div t-if="record.customer_id.raw_value" class="text-truncate mb-1"
                invisible="context.get('res_partner_search_mode') != 'customer'">
                <i class="fa fa-fw me-1 fa-id-card text-primary" title="Customer ID" />
                <field name="customer_id" />
             </div>
-            <!-- Purchase > Vendors -->
+            <!-- Purchase → Vendors menu -->
             <div t-if="record.vendor_id.raw_value" class="text-truncate mb-1"
                invisible="context.get('res_partner_search_mode') != 'supplier'">
                <i class="fa fa-fw me-1 fa-id-card text-primary" title="Vendor ID" />
@@ -41,21 +41,17 @@
       </field>
    </record>
 
-
-   <!-- List: ID after name + contact type column -->
+   <!-- List -->
    <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.list.inherit.contact.type</field>
       <field name="model">res.partner</field>
       <field name="inherit_id" ref="base.view_partner_tree" />
       <field name="arch" type="xml">
          <xpath expr="//field[@name='display_name']" position="after">
-            <!-- Contacts app: one ID column for all types -->
             <field name="contact_code" string="ID" optional="show"
                column_invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')" />
-            <!-- Sales > Customers -->
             <field name="customer_id" string="Customer ID" optional="show"
                column_invisible="context.get('res_partner_search_mode') != 'customer'" />
-            <!-- Purchase > Vendors -->
             <field name="vendor_id" string="Vendor ID" optional="show"
                column_invisible="context.get('res_partner_search_mode') != 'supplier'" />
          </xpath>
@@ -65,7 +61,7 @@
       </field>
    </record>
 
-   <!-- Form: type + CUST/VEND/EMP ID (ID field shown only for matching type) -->
+   <!-- Form -->
    <record id="view_partner_form_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.form.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -82,7 +78,7 @@
       </field>
    </record>
 
-   <!-- Search: replace default customer/supplier filters with contact_type filters -->
+   <!-- Search filters -->
    <record id="view_res_partner_filter_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.search.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -106,7 +102,7 @@
       </field>
    </record>
 
-   <!-- Menus: permanent domain so Sales/Purchase only list the right contact type -->
+   <!-- Keep Sales/Purchase menus scoped to the right contact type -->
    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
       <field name="domain">[('contact_type', '=', 'customer')]</field>
       <field name="context"

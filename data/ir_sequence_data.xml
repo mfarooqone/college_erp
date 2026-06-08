@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <!-- noupdate: never reset number_next on upgrade (was causing duplicate CUST/VEND/EMP IDs). -->
+   <!-- Leave sequences alone on upgrade — resetting them was giving duplicate IDs -->
    <data noupdate="1">
    <record id="seq_customer" model="ir.sequence">
       <field name="name">Customer ID</field>

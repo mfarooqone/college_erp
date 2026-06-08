@@ -1,6 +1,6 @@
 {
     'name': 'College ERP',
-    'version': '19.0.1.0.3',
+    'version': '19.0.1.0.4',
     'license': 'LGPL-3',
     'author': 'Najoom Al Thuraya',
     'website': 'https://althurayauae.com/',
@@ -30,6 +30,7 @@
         #                                   data seq                                   #
         # ---------------------------------------------------------------------------- #
         'data/ir_sequence_data.xml',
+        'data/ir_sequence_sync.xml',
     ],
     'assets': {
         'web.assets_backend': [

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <!-- Auto IDs for contacts. padding=5 → CUST/00001 … CUST/99999, then CUST/100000 (no overflow). -->
+   <!-- noupdate: never reset number_next on upgrade (was causing duplicate CUST/VEND/EMP IDs). -->
+   <data noupdate="1">
    <record id="seq_customer" model="ir.sequence">
       <field name="name">Customer ID</field>
       <field name="code">customer.id</field>
@@ -28,5 +29,7 @@
       <field name="number_next">1</field>
       <field name="number_increment">1</field>
    </record>
+
+   </data>
 
 </odoo>

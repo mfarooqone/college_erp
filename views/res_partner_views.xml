@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <!-- partner kanban view -->
+   <!-- Contacts: contact_type + auto IDs across form, list, kanban, search, and menus -->
+
+   <!-- Kanban: badge under contact name -->
    <record id="view_partner_kanban_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.kanban.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -19,7 +21,7 @@
    </record>
 
 
-   <!-- partner list view -->
+   <!-- List: contact type column -->
    <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.list.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -31,7 +33,7 @@
       </field>
    </record>
 
-   <!-- partner list form -->
+   <!-- Form: type + CUST/VEND/EMP ID (ID field shown only for matching type) -->
    <record id="view_partner_form_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.form.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -48,7 +50,7 @@
       </field>
    </record>
 
-   <!-- partner search view -->
+   <!-- Search: replace default customer/supplier filters with contact_type filters -->
    <record id="view_res_partner_filter_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.search.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -72,7 +74,7 @@
       </field>
    </record>
 
-   <!-- actions -->
+   <!-- Menus: permanent domain so Sales/Purchase only list the right contact type -->
    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
       <field name="domain">[('contact_type', '=', 'customer')]</field>
       <field name="context"

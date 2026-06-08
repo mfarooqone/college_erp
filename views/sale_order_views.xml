@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+   <!-- Show CUST/00001 in quotation & sales order list views -->
    <record id="view_sale_order_tree_inherit_customer_id" model="ir.ui.view">
       <field name="name">sale.order.list.inherit.customer.id</field>
       <field name="model">sale.order</field>
@@ -12,6 +13,7 @@
       </field>
    </record>
 
+   <!-- Show customer ID on kanban card under the customer name -->
    <record id="view_sale_order_kanban_inherit_customer_id" model="ir.ui.view">
       <field name="name">sale.order.kanban.inherit.customer.id</field>
       <field name="model">sale.order</field>

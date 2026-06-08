@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <!-- employee form view -->
+   <!-- HR: show EMP/ ID from linked work contact (employee_code, not employee_id) -->
 
+   <!-- Form: own row under name (do not use placeholder in xpath — Odoo rejects it) -->
    <record id="view_employee_form_inherit_employee_id" model="ir.ui.view">
       <field name="name">hr.employee.form.inherit.employee.id</field>
       <field name="model">hr.employee</field>
@@ -18,7 +19,7 @@
       </field>
    </record>
 
-   <!-- employee form list -->
+   <!-- List: Employee ID column after name -->
    <record id="view_employee_list_inherit_employee_code" model="ir.ui.view">
       <field name="name">hr.employee.list.inherit.employee.code</field>
       <field name="model">hr.employee</field>
@@ -30,7 +31,7 @@
       </field>
    </record>
 
-   <!-- employee kanban view -->
+   <!-- Kanban: ID under name with id-card icon -->
 
    <record id="view_employee_kanban_inherit_employee_code" model="ir.ui.view">
       <field name="name">hr.employee.kanban.inherit.employee.code</field>

@@ -13,6 +13,8 @@ class ResPartner(models.Model):
 
     customer_id = fields.Char(string='Customer ID', readonly=True, copy=False)
     vendor_id = fields.Char(string='Vendor ID', readonly=True, copy=False)
+    employee_id = fields.Char(string='Employee ID', readonly=True, copy=False)
+
 
     @api.model
     def default_get(self, fields_list):
@@ -25,7 +27,8 @@ class ResPartner(models.Model):
             values['contact_type'] = 'customer'
         elif search_mode == 'supplier':
             values['contact_type'] = 'vendor'
-
+        elif self.env.context.get('default_contact_type') == 'employee':
+            values['contact_type'] = 'employee'
         return values
 
     @api.model_create_multi
@@ -36,4 +39,6 @@ class ResPartner(models.Model):
                 partner.customer_id = self.env['ir.sequence'].next_by_code('customer.id')
             elif partner.contact_type == 'vendor' and not partner.vendor_id:
                 partner.vendor_id = self.env['ir.sequence'].next_by_code('vendor.id')
+            elif partner.contact_type == 'employee' and not partner.employee_id:
+                partner.employee_id = self.env['ir.sequence'].next_by_code('employee.id')
         return partners

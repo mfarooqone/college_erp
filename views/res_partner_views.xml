@@ -1,71 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
-        <field name="name">res.partner.list.inherit.contact.type</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_tree"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='phone']" position="after">
-                <field name="contact_type" optional="show"/>
-            </xpath>
-        </field>
-    </record>
+   <record id="view_partner_kanban_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.kanban.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+      <field name="arch" type="xml">
+         <xpath expr="//kanban/field[@name='active']" position="after">
+            <field name="contact_type"/>
+         </xpath>
+         <xpath expr="//field[@name='display_name']/parent::div" position="after">
+            <div class="mb-1">
+               <field name="contact_type" widget="badge"/>
+            </div>
+         </xpath>
+      </field>
+   </record>
 
-    <record id="view_partner_form_inherit_contact_type" model="ir.ui.view">
-        <field name="name">res.partner.form.inherit.contact.type</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='category_id']" position="after">
-                <field name="contact_type"
-                    placeholder="Select contact type..."
-                    readonly="context.get('res_partner_search_mode') in ('customer', 'supplier')"/>
-                <field name="customer_id" invisible="contact_type != 'customer'"/>
-                <field name="vendor_id" invisible="contact_type != 'vendor'"/>
-            </xpath>
-        </field>
-    </record>
+   <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.list.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_tree" />
+      <field name="arch" type="xml">
+         <xpath expr="//field[@name='phone']" position="after">
+            <field name="contact_type" optional="show" />
+         </xpath>
+      </field>
+   </record>
 
-    <record id="view_res_partner_filter_inherit_contact_type" model="ir.ui.view">
-        <field name="name">res.partner.search.inherit.contact.type</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_res_partner_filter"/>
-        <field name="arch" type="xml">
-            <xpath expr="//filter[@name='customer']" position="replace"/>
-            <xpath expr="//filter[@name='supplier']" position="replace"/>
-            <xpath expr="//filter[@name='type_company']" position="after">
-                <separator/>
-                <filter string="Customers" name="contact_type_customer"
-                    domain="[('contact_type', '=', 'customer')]"/>
-                <filter string="Vendors" name="contact_type_vendor"
-                    domain="[('contact_type', '=', 'vendor')]"/>
-                <filter string="Employees" name="contact_type_employee"
-                    domain="[('contact_type', '=', 'employee')]"/>
-            </xpath>
-            <xpath expr="//filter[@name='group_country']" position="after">
-                <filter string="Contact Type" name="group_contact_type"
-                    context="{'group_by': 'contact_type'}"/>
-            </xpath>
-        </field>
-    </record>
+   <record id="view_partner_form_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.form.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+         <xpath expr="//field[@name='category_id']" position="after">
+            <field name="contact_type"
+               placeholder="Select contact type..."
+               readonly="context.get('res_partner_search_mode') in ('customer', 'supplier')" />
+            <field name="customer_id" invisible="contact_type != 'customer'" />
+            <field name="vendor_id" invisible="contact_type != 'vendor'" />
+            <field name="employee_id" invisible="contact_type != 'employee'" />
+         </xpath>
+      </field>
+   </record>
 
-    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
-        <field name="domain">[('contact_type', '=', 'customer')]</field>
-        <field name="context" eval="{
+   <record id="view_res_partner_filter_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.search.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_res_partner_filter" />
+      <field name="arch" type="xml">
+         <xpath expr="//filter[@name='customer']" position="replace" />
+         <xpath expr="//filter[@name='supplier']" position="replace" />
+         <xpath expr="//filter[@name='type_company']" position="after">
+            <separator />
+            <filter string="Customers" name="contact_type_customer"
+               domain="[('contact_type', '=', 'customer')]" />
+            <filter string="Vendors" name="contact_type_vendor"
+               domain="[('contact_type', '=', 'vendor')]" />
+            <filter string="Employees" name="contact_type_employee"
+               domain="[('contact_type', '=', 'employee')]" />
+         </xpath>
+         <xpath expr="//filter[@name='group_country']" position="after">
+            <filter string="Contact Type" name="group_contact_type"
+               context="{'group_by': 'contact_type'}" />
+         </xpath>
+      </field>
+   </record>
+
+   <record id="account.res_partner_action_customer" model="ir.actions.act_window">
+      <field name="domain">[('contact_type', '=', 'customer')]</field>
+      <field name="context"
+         eval="{
             'res_partner_search_mode': 'customer',
             'default_is_company': True,
             'default_contact_type': 'customer',
-        }"/>
-    </record>
+        }" />
+   </record>
 
-    <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
-        <field name="domain">[('contact_type', '=', 'vendor')]</field>
-        <field name="context" eval="{
+   <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+      <field name="domain">[('contact_type', '=', 'vendor')]</field>
+      <field name="context"
+         eval="{
             'res_partner_search_mode': 'supplier',
             'default_is_company': True,
             'default_contact_type': 'vendor',
-        }"/>
-    </record>
+        }" />
+   </record>
 
 </odoo>

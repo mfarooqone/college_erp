@@ -31,10 +31,11 @@ class ContactIdMixin(models.AbstractModel):
     @api.model
     def _bump_sequence(self, sequence_code, field_name, prefix):
         sequence = self.env['ir.sequence'].search([('code', '=', sequence_code)], limit=1)
-        if sequence:
-            required = self._highest_stored_number(field_name, prefix) + 1
-            if sequence.number_next < required:
-                sequence.number_next = required
+        if not sequence:
+            return
+        required = self._highest_stored_number(field_name, prefix) + 1
+        if sequence.number_next < required:
+            sequence.number_next = required
 
     @api.model
     def _fix_duplicate_ids(self, contact_type):
@@ -43,20 +44,21 @@ class ContactIdMixin(models.AbstractModel):
         for partner in self.search([(field_name, 'like', prefix + '%')], order='id'):
             groups[partner[field_name]].append(partner)
         for partners in groups.values():
-            if len(partners) > 1:
-                self._bump_sequence(sequence_code, field_name, prefix)
-                for partner in partners[1:]:
-                    partner[field_name] = self.env['ir.sequence'].next_by_code(sequence_code)
+            if len(partners) <= 1:
+                continue
+            self._bump_sequence(sequence_code, field_name, prefix)
+            for partner in partners[1:]:
+                partner[field_name] = self.env['ir.sequence'].next_by_code(sequence_code)
 
     @api.model
     def _sync_all_contact_sequences(self):
-        """Called on module upgrade — fixes any duplicate IDs and resets the counters."""
+        """Fix duplicate IDs and align sequence counters."""
         for contact_type, (code, field, prefix) in CONTACT_SEQUENCES.items():
             self._fix_duplicate_ids(contact_type)
             self._bump_sequence(code, field, prefix)
 
     @api.model
     def _next_contact_id(self, contact_type):
-        code, field, prefix = CONTACT_SEQUENCES[contact_type]
-        self._bump_sequence(code, field, prefix)
+        code, field_name, prefix = CONTACT_SEQUENCES[contact_type]
+        self._bump_sequence(code, field_name, prefix)
         return self.env['ir.sequence'].next_by_code(code)

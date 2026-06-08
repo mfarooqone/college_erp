@@ -13,7 +13,7 @@ class ResPartner(models.Model):
         ('customer', 'Customer'),
         ('vendor', 'Vendor'),
         ('employee', 'Employee'),
-    ], string='Contact Type', required=True)
+    ], string='Contact Type')
 
     customer_id = fields.Char(string='Customer ID', readonly=True, copy=False)
     vendor_id = fields.Char(string='Vendor ID', readonly=True, copy=False)
@@ -53,6 +53,7 @@ class ResPartner(models.Model):
             if partner.id in internal_ids:
                 partner.write({
                     'is_internal_company': True,
+                    'contact_type': False,
                     'customer_id': False,
                     'vendor_id': False,
                     'employee_id': False,
@@ -66,19 +67,20 @@ class ResPartner(models.Model):
     @api.model
     def _sync_all_contact_sequences(self):
         """Called on module upgrade — fix internal company partner, backfill IDs, sync counters."""
-        self.with_context(active_test=False).search([
-            ('contact_type', '=', 'company'),
-        ]).write({'contact_type': 'customer'})
-
         internal_ids = self.env['res.company'].sudo().search([]).mapped('partner_id').ids
         skip_ids = internal_ids or [0]
         if internal_ids:
             self.browse(internal_ids).write({
                 'is_internal_company': True,
+                'contact_type': False,
                 'customer_id': False,
                 'vendor_id': False,
                 'employee_id': False,
             })
+        self.with_context(active_test=False).search([
+            ('contact_type', '=', 'company'),
+            ('id', 'not in', skip_ids),
+        ]).write({'contact_type': 'customer'})
         self.search([
             ('is_internal_company', '=', True),
             ('id', 'not in', skip_ids),

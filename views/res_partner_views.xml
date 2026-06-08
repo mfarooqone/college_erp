@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-   <delete model="ir.ui.menu" search="[('id', '=', ref('college_erp.menu_res_partner_company'))]"/>
-   <delete model="ir.actions.act_window" search="[('id', '=', ref('college_erp.action_res_partner_company'))]"/>
-
    <!-- Contact views — type, auto ID, filters -->
 
    <!-- Kanban -->
@@ -13,13 +10,14 @@
       <field name="inherit_id" ref="base.res_partner_kanban_view" />
       <field name="arch" type="xml">
          <xpath expr="//kanban/field[@name='active']" position="after">
+            <field name="is_internal_company" />
             <field name="contact_type" />
             <field name="contact_code" />
             <field name="customer_id" />
             <field name="vendor_id" />
          </xpath>
          <xpath expr="//field[@name='display_name']/parent::div" position="after">
-            <div class="mb-1">
+            <div t-if="!record.is_internal_company.raw_value" class="mb-1">
                <field name="contact_type" widget="badge" />
             </div>
             <!-- Contacts app -->
@@ -59,7 +57,8 @@
                column_invisible="context.get('res_partner_search_mode') != 'supplier'" />
          </xpath>
          <xpath expr="//field[@name='phone']" position="after">
-            <field name="contact_type" optional="show" />
+            <field name="is_internal_company" column_invisible="1" />
+            <field name="contact_type" optional="show" invisible="is_internal_company" />
          </xpath>
       </field>
    </record>
@@ -74,7 +73,8 @@
             <field name="is_internal_company" invisible="1" />
             <field name="contact_type"
                placeholder="Select contact type..."
-               invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')"
+               invisible="is_internal_company or context.get('res_partner_search_mode') in ('customer', 'supplier')"
+               required="not is_internal_company"
                readonly="context.get('default_contact_type') == 'employee'" />
             <field name="customer_id" invisible="contact_type != 'customer' or is_internal_company" />
             <field name="vendor_id" invisible="contact_type != 'vendor'" />

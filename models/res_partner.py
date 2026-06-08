@@ -18,6 +18,24 @@ class ResPartner(models.Model):
     vendor_id = fields.Char(string='Vendor ID', readonly=True, copy=False)
     employee_id = fields.Char(string='Employee ID', readonly=True, copy=False)
 
+    # Single ID column for the Contacts app (CUST/, VEND/, or EMP/ depending on type).
+    contact_code = fields.Char(
+        string='ID',
+        compute='_compute_contact_code',
+    )
+
+    @api.depends('contact_type', 'customer_id', 'vendor_id', 'employee_id')
+    def _compute_contact_code(self):
+        for partner in self:
+            if partner.contact_type == 'customer':
+                partner.contact_code = partner.customer_id
+            elif partner.contact_type == 'vendor':
+                partner.contact_code = partner.vendor_id
+            elif partner.contact_type == 'employee':
+                partner.contact_code = partner.employee_id
+            else:
+                partner.contact_code = False
+
     @api.model
     def default_get(self, fields_list):
         """Pre-fill contact_type from the menu that opened the form."""

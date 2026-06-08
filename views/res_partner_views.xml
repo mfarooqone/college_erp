@@ -11,22 +11,54 @@
       <field name="arch" type="xml">
          <xpath expr="//kanban/field[@name='active']" position="after">
             <field name="contact_type" />
+            <field name="contact_code" />
+            <field name="customer_id" />
+            <field name="vendor_id" />
          </xpath>
          <xpath expr="//field[@name='display_name']/parent::div" position="after">
             <div class="mb-1">
                <field name="contact_type" widget="badge" />
+            </div>
+            <!-- Contacts app: one ID field -->
+            <div t-if="record.contact_code.raw_value" class="text-truncate mb-1"
+               invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')">
+               <i class="fa fa-fw me-1 fa-id-card text-primary" title="ID" />
+               <field name="contact_code" />
+            </div>
+            <!-- Sales > Customers -->
+            <div t-if="record.customer_id.raw_value" class="text-truncate mb-1"
+               invisible="context.get('res_partner_search_mode') != 'customer'">
+               <i class="fa fa-fw me-1 fa-id-card text-primary" title="Customer ID" />
+               <field name="customer_id" />
+            </div>
+            <!-- Purchase > Vendors -->
+            <div t-if="record.vendor_id.raw_value" class="text-truncate mb-1"
+               invisible="context.get('res_partner_search_mode') != 'supplier'">
+               <i class="fa fa-fw me-1 fa-id-card text-primary" title="Vendor ID" />
+               <field name="vendor_id" />
             </div>
          </xpath>
       </field>
    </record>
 
 
-   <!-- List: contact type column -->
+   <!-- List: ID after name + contact type column -->
    <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.list.inherit.contact.type</field>
       <field name="model">res.partner</field>
       <field name="inherit_id" ref="base.view_partner_tree" />
       <field name="arch" type="xml">
+         <xpath expr="//field[@name='display_name']" position="after">
+            <!-- Contacts app: one ID column for all types -->
+            <field name="contact_code" string="ID" optional="show"
+               column_invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')" />
+            <!-- Sales > Customers -->
+            <field name="customer_id" string="Customer ID" optional="show"
+               column_invisible="context.get('res_partner_search_mode') != 'customer'" />
+            <!-- Purchase > Vendors -->
+            <field name="vendor_id" string="Vendor ID" optional="show"
+               column_invisible="context.get('res_partner_search_mode') != 'supplier'" />
+         </xpath>
          <xpath expr="//field[@name='phone']" position="after">
             <field name="contact_type" optional="show" />
          </xpath>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!-- list view -->
+   <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.list.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_tree" />
+      <field name="arch" type="xml">
+         <xpath expr="//field[@name='phone']" position="after">
+            <field name="contact_type" optional="show" />
+         </xpath>
+      </field>
+   </record>
+
+   <!-- form view -->
+
+   <record id="view_partner_form_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.form.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+         <xpath expr="//field[@name='company_type']" position="after">
+            <field name="contact_type" />
+         </xpath>
+      </field>
+   </record>
+
+   <!-- search view -->
+   <record id="view_res_partner_filter_inherit_contact_type" model="ir.ui.view">
+      <field name="name">res.partner.search.inherit.contact.type</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_res_partner_filter" />
+      <field name="arch" type="xml">
+         <xpath expr="//filter[@name='type_company']" position="after">
+            <separator />
+            <filter string="Customers" name="contact_type_customer"
+               domain="[('contact_type', '=', 'customer')]" />
+            <filter string="Vendors" name="contact_type_vendor"
+               domain="[('contact_type', '=', 'vendor')]" />
+            <filter string="Employees" name="contact_type_employee"
+               domain="[('contact_type', '=', 'employee')]" />
+         </xpath>
+         <xpath expr="//filter[@name='group_country']" position="after">
+            <filter string="Contact Type" name="group_contact_type"
+               context="{'group_by': 'contact_type'}" />
+         </xpath>
+      </field>
+   </record>
+
+</odoo>

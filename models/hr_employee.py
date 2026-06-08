@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
+    
     employee_code = fields.Char(
         string='Employee ID',
         related='work_contact_id.employee_id',

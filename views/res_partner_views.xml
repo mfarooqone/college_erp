@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+   <!-- partner kanban view -->
    <record id="view_partner_kanban_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.kanban.inherit.contact.type</field>
       <field name="model">res.partner</field>
-      <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+      <field name="inherit_id" ref="base.res_partner_kanban_view" />
       <field name="arch" type="xml">
          <xpath expr="//kanban/field[@name='active']" position="after">
-            <field name="contact_type"/>
+            <field name="contact_type" />
          </xpath>
          <xpath expr="//field[@name='display_name']/parent::div" position="after">
             <div class="mb-1">
-               <field name="contact_type" widget="badge"/>
+               <field name="contact_type" widget="badge" />
             </div>
          </xpath>
       </field>
    </record>
 
+
+   <!-- partner list view -->
    <record id="view_partner_tree_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.list.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -28,6 +31,7 @@
       </field>
    </record>
 
+   <!-- partner list form -->
    <record id="view_partner_form_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.form.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -44,6 +48,7 @@
       </field>
    </record>
 
+   <!-- partner search view -->
    <record id="view_res_partner_filter_inherit_contact_type" model="ir.ui.view">
       <field name="name">res.partner.search.inherit.contact.type</field>
       <field name="model">res.partner</field>
@@ -67,6 +72,7 @@
       </field>
    </record>
 
+   <!-- actions -->
    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
       <field name="domain">[('contact_type', '=', 'customer')]</field>
       <field name="context"

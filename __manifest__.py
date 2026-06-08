@@ -23,6 +23,8 @@
         'views/college_students_views.xml',
         'views/college_erp_menus.xml',
         'views/res_partner_views.xml',
+        'views/sale_order_views.xml',
+        'views/purchase_order_views.xml',
         'views/hr_employee_views.xml',
         # ---------------------------------------------------------------------------- #
         #                                   data seq                                   #

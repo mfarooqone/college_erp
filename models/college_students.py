@@ -38,12 +38,6 @@ class CollegeStudents(models.Model):
         'perm_street', 'perm_street2', 'perm_city', 'perm_state_id', 'perm_zip', 'perm_country_id',
     ]
 
-    partner_id = fields.Many2one(
-        'res.partner',
-        string='Contact',
-        ondelete='restrict',
-        domain="[('is_company', '=', False)]",
-    )
     image_1920 = fields.Image(string='Photo', max_width=1920, max_height=1920)
     image_128 = fields.Image(string='Photo (128)', related='image_1920', max_width=128, max_height=128, store=True)
     name = fields.Char(string='Name', required=True)
@@ -140,30 +134,6 @@ class CollegeStudents(models.Model):
         if self.perm_state_id.country_id and self.perm_country_id != self.perm_state_id.country_id:
             self.perm_country_id = self.perm_state_id.country_id
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        if not self.partner_id:
-            return
-        partner = self.partner_id
-        self.name = partner.name
-        self.email = partner.email
-        self.phone = partner.phone or partner.mobile
-        if partner.image_1920:
-            self.image_1920 = partner.image_1920
-        self.comm_street = partner.street
-        self.comm_street2 = partner.street2
-        self.comm_city = partner.city
-        self.comm_state_id = partner.state_id
-        self.comm_zip = partner.zip
-        self.comm_country_id = partner.country_id
-        if self.same_as_communication:
-            self.perm_street = partner.street
-            self.perm_street2 = partner.street2
-            self.perm_city = partner.city
-            self.perm_state_id = partner.state_id
-            self.perm_zip = partner.zip
-            self.perm_country_id = partner.country_id
-
     @api.onchange(
         'same_as_communication',
         'comm_street', 'comm_street2', 'comm_city', 'comm_state_id', 'comm_zip', 'comm_country_id',
@@ -177,17 +147,6 @@ class CollegeStudents(models.Model):
         self.perm_state_id = self.comm_state_id
         self.perm_zip = self.comm_zip
         self.perm_country_id = self.comm_country_id
-
-    def action_open_partner(self):
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Contact',
-            'res_model': 'res.partner',
-            'res_id': self.partner_id.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
 
     @api.model_create_multi
     def create(self, vals_list):

@@ -27,11 +27,4 @@
         name="Admission"
         parent="menu_college_erp_students_management"
         action="action_college_admission" />
-
-    <menuitem
-        id="menu_college_erp_contacts"
-        name="Contacts"
-        parent="menu_college_erp_students_management"
-        action="action_college_contacts"
-        sequence="20"/>
 </odoo>

@@ -20,7 +20,8 @@
       <field name="inherit_id" ref="base.view_partner_form" />
       <field name="arch" type="xml">
          <xpath expr="//field[@name='category_id']" position="after">
-            <field name="contact_type" placeholder="Select contact type..." />
+            <field name="contact_type" placeholder="Select contact type..."
+               readonly="context.get('res_partner_search_mode') in ('customer', 'supplier')" />
          </xpath>
          <xpath expr="//field[@name='contact_type']" position="after">
             <field name="customer_id" invisible="contact_type != 'customer'" />

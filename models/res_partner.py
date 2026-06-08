@@ -26,3 +26,20 @@ class ResPartner(models.Model):
                 partner.vendor_id = self.env['ir.sequence'].next_by_code('vendor.id')
 
         return partners
+        
+# ---------------------------------------------------------------------------- #
+#                          get default values                                  #
+# ---------------------------------------------------------------------------- #
+    @api.model
+    def default_get(self, fields_list):
+        values = super().default_get(fields_list)
+        if 'contact_type' not in fields_list:
+            return values
+
+        search_mode = self.env.context.get('res_partner_search_mode')
+        if search_mode == 'customer':
+            values['contact_type'] = 'customer'
+        elif search_mode == 'supplier':
+            values['contact_type'] = 'vendor'
+
+        return values

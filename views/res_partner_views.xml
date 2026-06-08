@@ -22,6 +22,12 @@
          <xpath expr="//field[@name='category_id']" position="after">
             <field name="contact_type" placeholder="Select contact type..." />
          </xpath>
+         <xpath expr="//field[@name='contact_type']" position="after">
+            <field name="customer_id" invisible="contact_type != 'customer'" />
+         </xpath>
+         <xpath expr="//field[@name='contact_type']" position="after">
+            <field name="vendor_id" invisible="contact_type != 'vendor'" />
+         </xpath>
       </field>
    </record>
 

@@ -10,4 +10,4 @@ class ResPartner(models.Model):
         ('vendor', 'Vendor'),
         ('employee', 'Employee'),
         ('company', 'Company'),
-    ], string='Contact Type', default='contact')
+    ], string='Contact Type', required=True)

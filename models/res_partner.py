@@ -14,22 +14,6 @@ class ResPartner(models.Model):
     customer_id = fields.Char(string='Customer ID', readonly=True, copy=False)
     vendor_id = fields.Char(string='Vendor ID', readonly=True, copy=False)
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        partners = super().create(vals_list)
-
-        for partner in partners:
-            if partner.contact_type == 'customer' and not partner.customer_id:
-                partner.customer_id = self.env['ir.sequence'].next_by_code('customer.id')
-
-            if partner.contact_type == 'vendor' and not partner.vendor_id:
-                partner.vendor_id = self.env['ir.sequence'].next_by_code('vendor.id')
-
-        return partners
-        
-# ---------------------------------------------------------------------------- #
-#                          get default values                                  #
-# ---------------------------------------------------------------------------- #
     @api.model
     def default_get(self, fields_list):
         values = super().default_get(fields_list)
@@ -43,3 +27,13 @@ class ResPartner(models.Model):
             values['contact_type'] = 'vendor'
 
         return values
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        partners = super().create(vals_list)
+        for partner in partners:
+            if partner.contact_type == 'customer' and not partner.customer_id:
+                partner.customer_id = self.env['ir.sequence'].next_by_code('customer.id')
+            elif partner.contact_type == 'vendor' and not partner.vendor_id:
+                partner.vendor_id = self.env['ir.sequence'].next_by_code('vendor.id')
+        return partners

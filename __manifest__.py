@@ -9,7 +9,7 @@
     'description': """Form student admission to gradution, this cover all aspects of college management""",
     'sequence': -10,
     'application': True,
-    'depends': ['base', 'contacts', 'sale', 'purchase'],
+    'depends': ['base', 'contacts', 'account', 'sale', 'purchase'],
     'installable': True,
     'data': [
         'security/college_erp_security.xml',

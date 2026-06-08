@@ -26,8 +26,8 @@
       <field name="code">employee.id</field>
       <field name="prefix">EMP/</field>
       <field name="padding">5</field>
-      <field name="number_next">1</field>
       <field name="number_increment">1</field>
+      <field name="number_next">1</field>
    </record>
 
    </data>

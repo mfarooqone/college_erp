@@ -1,6 +1,6 @@
 {
     'name': 'College ERP',
-    'version': '19.0.1.0.4',
+    'version': '19.0.1.0.6',
     'license': 'LGPL-3',
     'author': 'Najoom Al Thuraya',
     'website': 'https://althurayauae.com/',

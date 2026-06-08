@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from odoo import api, models
 
-# Each contact type: sequence code, field on partner, and ID prefix (CUST/, VEND/, EMP/)
+# Each contact type: sequence code, field on partner, and ID prefix
 CONTACT_SEQUENCES = {
     'customer': ('customer.id', 'customer_id', 'CUST/'),
     'vendor': ('vendor.id', 'vendor_id', 'VEND/'),
@@ -12,7 +12,7 @@ CONTACT_SEQUENCES = {
 
 class ContactIdMixin(models.AbstractModel):
     _name = 'college.erp.contact.id.mixin'
-    _description = 'Auto CUST/VEND/EMP ID helpers'
+    _description = 'Auto contact ID helpers'
 
     @api.model
     def _contact_id_field(self, contact_type):

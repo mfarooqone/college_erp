@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+   <delete model="ir.ui.menu" search="[('id', '=', ref('college_erp.menu_res_partner_company'))]"/>
+   <delete model="ir.actions.act_window" search="[('id', '=', ref('college_erp.action_res_partner_company'))]"/>
+
    <!-- Contact views — type, auto ID, filters -->
 
    <!-- Kanban -->
@@ -19,19 +22,19 @@
             <div class="mb-1">
                <field name="contact_type" widget="badge" />
             </div>
-            <!-- Contacts app — one shared ID field -->
+            <!-- Contacts app -->
             <div t-if="record.contact_code.raw_value" class="text-truncate mb-1"
                invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')">
                <i class="fa fa-fw me-1 fa-id-card text-primary" title="ID" />
                <field name="contact_code" />
             </div>
-            <!-- Sales → Customers menu -->
+            <!-- Sales → Customers -->
             <div t-if="record.customer_id.raw_value" class="text-truncate mb-1"
                invisible="context.get('res_partner_search_mode') != 'customer'">
                <i class="fa fa-fw me-1 fa-id-card text-primary" title="Customer ID" />
                <field name="customer_id" />
             </div>
-            <!-- Purchase → Vendors menu -->
+            <!-- Purchase → Vendors -->
             <div t-if="record.vendor_id.raw_value" class="text-truncate mb-1"
                invisible="context.get('res_partner_search_mode') != 'supplier'">
                <i class="fa fa-fw me-1 fa-id-card text-primary" title="Vendor ID" />
@@ -68,10 +71,12 @@
       <field name="inherit_id" ref="base.view_partner_form" />
       <field name="arch" type="xml">
          <xpath expr="//field[@name='category_id']" position="after">
+            <field name="is_internal_company" invisible="1" />
             <field name="contact_type"
                placeholder="Select contact type..."
-               readonly="context.get('res_partner_search_mode') in ('customer', 'supplier')" />
-            <field name="customer_id" invisible="contact_type != 'customer'" />
+               invisible="context.get('res_partner_search_mode') in ('customer', 'supplier')"
+               readonly="context.get('default_contact_type') == 'employee'" />
+            <field name="customer_id" invisible="contact_type != 'customer' or is_internal_company" />
             <field name="vendor_id" invisible="contact_type != 'vendor'" />
             <field name="employee_id" invisible="contact_type != 'employee'" />
          </xpath>
@@ -102,9 +107,9 @@
       </field>
    </record>
 
-   <!-- Keep Sales/Purchase menus scoped to the right contact type -->
+   <!-- Sales → customers only, Purchase → vendors only -->
    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
-      <field name="domain">[('contact_type', '=', 'customer')]</field>
+      <field name="domain">[('contact_type', '=', 'customer'), ('is_internal_company', '=', False)]</field>
       <field name="context"
          eval="{
             'res_partner_search_mode': 'customer',
@@ -114,7 +119,7 @@
    </record>
 
    <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
-      <field name="domain">[('contact_type', '=', 'vendor')]</field>
+      <field name="domain">[('contact_type', '=', 'vendor'), ('is_internal_company', '=', False)]</field>
       <field name="context"
          eval="{
             'res_partner_search_mode': 'supplier',

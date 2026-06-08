@@ -20,8 +20,10 @@
         'views/sale_order_views.xml',
         'views/purchase_order_views.xml',
         'views/hr_employee_views.xml',
+        'views/res_config_settings_views.xml',
         'data/ir_sequence_data.xml',
         'data/ir_sequence_sync.xml',
+
     ],
     'assets': {
         'web.assets_backend': [

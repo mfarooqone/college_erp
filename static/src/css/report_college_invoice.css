@@ -1,0 +1,201 @@
+.o_althuraya_invoice {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #333;
+    padding: 0;
+    margin: 0;
+    background-color: #e8e8e8;
+}
+
+/* White top sheet — header only */
+.o_althuraya_invoice .o_inv_header_sheet {
+    background: #fff;
+    padding: 10px 20px 8px;
+}
+
+/* Middle — watermark bg image lives here only */
+.o_althuraya_invoice .o_inv_body_sheet {
+    padding: 14px 20px 20px;
+    background-color: #f4f4f4;
+}
+
+.o_althuraya_invoice .o_inv_body_content {
+    position: relative;
+}
+
+/* White bottom sheet — footer only */
+.o_althuraya_invoice .o_inv_footer_sheet {
+    background: #fff;
+    padding: 6px 20px 10px;
+}
+
+.o_althuraya_invoice .o_inv_gold {
+    color: #b8860b;
+}
+
+.o_althuraya_invoice .o_inv_gold-bg {
+    background-color: #c9a227;
+    color: #fff;
+}
+
+.o_althuraya_invoice .o_inv_title {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin: 12px 0 18px;
+    color: #222;
+}
+
+.o_althuraya_invoice .o_inv_number_meta_block {
+    max-width: 55%;
+    margin-top: 8px;
+}
+
+.o_althuraya_invoice .o_inv_number {
+    font-size: 26px;
+    font-weight: 700;
+    color: #9b870c;
+    margin: 0 0 10px 0;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.o_althuraya_invoice .o_inv_meta_box {
+    background: #f0f0f0;
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 0;
+}
+
+.o_althuraya_invoice .o_inv_meta_table {
+    border: none;
+    margin: 0;
+}
+
+.o_althuraya_invoice .o_inv_meta_table td {
+    border: none;
+    padding: 0 24px 0 0;
+    vertical-align: top;
+    width: 50%;
+}
+
+.o_althuraya_invoice .o_meta_cell .o_meta_label {
+    font-weight: 700;
+    font-size: 11px;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+.o_althuraya_invoice .o_meta_cell .o_meta_value {
+    font-size: 11px;
+    color: #333;
+}
+
+.o_althuraya_invoice .o_meta_cell .o_ref_value {
+    color: #444;
+}
+
+.o_althuraya_invoice .o_trn_line {
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.o_althuraya_invoice .o_trn_label {
+    font-weight: 700;
+    color: #222;
+}
+
+.o_althuraya_invoice .o_trn_value {
+    font-weight: 400;
+    color: #222;
+}
+
+.o_althuraya_invoice .o_inv_lines thead th {
+    background-color: #c9a227;
+    color: #fff;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    border: 1px solid #b8860b;
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
+.o_althuraya_invoice .o_inv_lines tbody td {
+    border: 1px solid #ddd;
+    padding: 5px 4px;
+    vertical-align: top;
+}
+
+.o_althuraya_invoice .o_inv_lines tbody tr:nth-child(even) td {
+    background-color: #fafafa;
+}
+
+.o_althuraya_invoice .o_bottom_section {
+    margin-top: 4px;
+}
+
+.o_althuraya_invoice .o_totals_table td {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+}
+
+.o_althuraya_invoice .o_totals_table tr:not(.o_total_row) td {
+    background-color: #f5f5f5;
+}
+
+.o_althuraya_invoice .o_totals_table tr.o_total_row td {
+    background-color: #c9a227;
+    color: #fff;
+    font-weight: 700;
+    border-color: #b8860b;
+}
+
+.o_althuraya_invoice .o_inv_header_row {
+    margin-bottom: 8px;
+}
+
+.o_althuraya_invoice .o_inv_company_logo,
+.o_althuraya_invoice .o_inv_letter_head {
+    width: 100%;
+    max-height: 95px;
+    object-fit: contain;
+    display: block;
+}
+
+.o_althuraya_invoice .o_inv_company_logo {
+    object-position: left center;
+}
+
+.o_althuraya_invoice .o_inv_letter_head {
+    object-position: right center;
+}
+
+.o_althuraya_invoice .o_inv_footer_content img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.o_althuraya_invoice .o_to_from_box {
+    margin-bottom: 10px;
+}
+
+.o_althuraya_invoice .o_to_from_box strong {
+    font-size: 12px;
+}
+
+.o_althuraya_invoice .o_payment_communication,
+.o_althuraya_invoice .o_payment_account {
+    font-size: 11px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+.o_althuraya_invoice .o_bank_account_number {
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 0.02em;
+}

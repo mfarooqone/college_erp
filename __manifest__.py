@@ -21,6 +21,9 @@
         'views/purchase_order_views.xml',
         'views/hr_employee_views.xml',
         'views/res_config_settings_views.xml',
+        'views/res_company_views.xml',
+        'views/accounting_views/report_invoice.xml',
+        'views/accounting_views/account_move_views.xml',
         'data/ir_sequence_data.xml',
         'data/ir_sequence_sync.xml',
 
@@ -28,6 +31,12 @@
     'assets': {
         'web.assets_backend': [
             'college_erp/static/src/scss/college_students_list.scss',
+        ],
+        'web.report_assets_common': [
+            'college_erp/static/src/css/report_college_invoice.css',
+        ],
+        'web.report_assets_pdf': [
+            'college_erp/static/src/css/report_college_invoice.css',
         ],
     },
 }

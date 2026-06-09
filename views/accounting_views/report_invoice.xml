@@ -11,35 +11,42 @@
             <t t-set="company" t-value="o.company_id" />
             <t t-set="has_bg"
                t-value="company.layout_background == 'Custom' and company.layout_background_image" />
-            <t t-set="body_bg_style"
-               t-value="has_bg and ('background-image: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url(' + image_data_uri(company.layout_background_image) + '); background-size: cover; background-position: center; background-repeat: no-repeat;') or ''" />
+            <t t-set="bg_overlay"
+               t-value="has_bg and ('linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url(' + image_data_uri(company.layout_background_image) + ')') or ''" />
+            <t t-set="section_bg_style"
+               t-value="has_bg and ('background-image: ' + bg_overlay + '; background-size: cover; background-position: center top; background-repeat: no-repeat;') or ''" />
 
             <div class="article o_althuraya_invoice">
 
-               <!-- 1) White header sheet: logo + letterhead -->
+               <!-- 1) White top band — no bg image -->
+               <div class="o_inv_header_white_top"/>
 
-               <div class="o_inv_header_sheet">
-                  <div class="row o_inv_header_row align-items-stretch">
-                     <div class="col-5 o_inv_header_left">
-                        <img t-if="company.logo"
-                           class="o_inv_company_logo"
-                           t-att-src="image_data_uri(company.logo)"
-                           alt="Company Logo" />
-                     </div>
-                     <div class="col-7 o_inv_header_right">
-                        <img class="o_inv_letter_head"
-                           t-att-src="'/college_erp/static/letter_head.png'"
-                           alt="Letterhead" />
+               <!-- 2) Bg image layer (body + area behind header sheet) -->
+               <div class="o_inv_bg_section" t-att-style="section_bg_style">
+
+                  <!-- 3) White sheet stacked ON bg — logo + letterhead only -->
+                  <div class="o_inv_header_white_sheet">
+                     <div class="row o_inv_header_row align-items-stretch">
+                        <div class="col-5 o_inv_header_left">
+                           <img t-if="company.logo"
+                              class="o_inv_company_logo"
+                              t-att-src="image_data_uri(company.logo)"
+                              alt="Company Logo" />
+                        </div>
+                        <div class="col-7 o_inv_header_right">
+                           <img class="o_inv_letter_head"
+                              t-att-src="'/college_erp/static/letter_head.png'"
+                              alt="Letterhead" />
+                        </div>
                      </div>
                   </div>
-               </div>
 
-               <!-- 2) Middle body: page bg + watermark image + invoice content -->
-               <div class="o_inv_body_sheet" t-att-style="body_bg_style">
+                  <!-- 4) Invoice content — sits on bg image directly -->
                   <div class="o_inv_body_content">
 
                      <div class="o_inv_title">
-                        <t t="">Tax Invoice</t>
+                        <t t-if="proforma">Pro-forma Invoice</t>
+                        <t t-else="">Tax Invoice</t>
                      </div>
 
                      <div class="row o_to_from_box">
@@ -183,6 +190,7 @@
                      </div>
 
                   </div>
+
                </div>
 
                <!-- 3) White footer sheet -->

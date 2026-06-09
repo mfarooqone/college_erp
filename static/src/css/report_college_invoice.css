@@ -7,20 +7,31 @@
     background-color: #e8e8e8;
 }
 
-/* White top sheet — header only */
-.o_althuraya_invoice .o_inv_header_sheet {
+/* Layer 1: white top — no bg image */
+.o_althuraya_invoice .o_inv_header_white_top {
+    height: 48px;
+    background: #fff;
+}
+
+/* Layer 2: bg image (watermark) */
+.o_althuraya_invoice .o_inv_bg_section {
+    background-color: #f4f4f4;
+    position: relative;
+}
+
+/* Layer 3: white sheet stacked on bg — logos only */
+.o_althuraya_invoice .o_inv_header_white_sheet {
     background: #fff;
     padding: 10px 20px 8px;
-}
-
-/* Middle — watermark bg image lives here only */
-.o_althuraya_invoice .o_inv_body_sheet {
-    padding: 14px 20px 20px;
-    background-color: #f4f4f4;
-}
-
-.o_althuraya_invoice .o_inv_body_content {
     position: relative;
+    z-index: 1;
+}
+
+/* Layer 4: invoice content on bg (not on white sheet) */
+.o_althuraya_invoice .o_inv_body_content {
+    padding: 14px 20px 20px;
+    position: relative;
+    z-index: 0;
 }
 
 /* White bottom sheet — footer only */

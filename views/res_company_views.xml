@@ -6,8 +6,10 @@
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Invoice Customization" name="invoice_customization">
-                    <field name="is_invoice_customization_enabled"/>
+                <page string="Invoice Customization" name="report_images">
+                    <group>
+                        <field name="is_invoice_customization_enabled"/>
+                    </group>
                 </page>
             </xpath>
         </field>

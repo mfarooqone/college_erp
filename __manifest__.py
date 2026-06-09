@@ -22,6 +22,7 @@
         'views/hr_employee_views.xml',
         'views/res_config_settings_views.xml',
         'views/res_company_views.xml',
+        'views/accounting_views/report_templates.xml',
         'views/accounting_views/report_invoice.xml',
         'views/accounting_views/account_move_views.xml',
         'data/ir_sequence_data.xml',

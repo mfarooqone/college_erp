@@ -2,42 +2,31 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #333;
+}
+
+.header .o_inv_header_white_sheet {
+    background: #fff;
     padding: 0;
-    margin: 0;
-    background-color: #e8e8e8;
-}
-
-/* Layer 1: white top — no bg image */
-.o_althuraya_invoice .o_inv_header_white_top {
-    height: 48px;
-    background: #fff;
-}
-
-/* Layer 2: bg image (watermark) */
-.o_althuraya_invoice .o_inv_bg_section {
-    background-color: #f4f4f4;
-    position: relative;
-}
-
-/* Layer 3: white sheet stacked on bg — logos only */
-.o_althuraya_invoice .o_inv_header_white_sheet {
-    background: #fff;
-    padding: 10px 20px 8px;
+    margin-bottom: 12px;
     position: relative;
     z-index: 1;
 }
 
-/* Layer 4: invoice content on bg (not on white sheet) */
-.o_althuraya_invoice .o_inv_body_content {
-    padding: 14px 20px 20px;
-    position: relative;
-    z-index: 0;
+.header .o_inv_report_header {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
-/* White bottom sheet — footer only */
-.o_althuraya_invoice .o_inv_footer_sheet {
-    background: #fff;
-    padding: 6px 20px 10px;
+.o_althuraya_invoice .o_inv_body_content {
+    padding: 16px 4px 0;
+}
+
+.o_althuraya_invoice .o_inv_footer_content img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .o_althuraya_invoice .o_inv_gold {
@@ -50,25 +39,48 @@
 }
 
 .o_althuraya_invoice .o_inv_title {
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 700;
     text-align: center;
-    margin: 12px 0 18px;
-    color: #222;
+    margin: 8px 0 0 0;
+    padding-top: 8px;
+    color: #1a1a1a;
+}
+
+.o_althuraya_invoice .o_to_from_box {
+    margin: 1.5rem 0;
+}
+
+.o_althuraya_invoice .o_to_from_label {
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    color: #1a1a1a;
+}
+
+.o_althuraya_invoice .o_to_from_address {
+    font-size: 15px;
+    margin-top: 5px;
+    line-height: 1.45;
+    color: #333;
+}
+
+.o_althuraya_invoice .o_from_trn {
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.o_althuraya_invoice .o_inv_number {
+    font-size: 30px;
+    font-weight: 700;
+    color: #9b870c;
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+    text-align: left;
 }
 
 .o_althuraya_invoice .o_inv_number_meta_block {
     max-width: 55%;
-    margin-top: 8px;
-}
-
-.o_althuraya_invoice .o_inv_number {
-    font-size: 26px;
-    font-weight: 700;
-    color: #9b870c;
-    margin: 0 0 10px 0;
-    line-height: 1.2;
-    text-align: left;
 }
 
 .o_althuraya_invoice .o_inv_meta_box {
@@ -105,21 +117,6 @@
 
 .o_althuraya_invoice .o_meta_cell .o_ref_value {
     color: #444;
-}
-
-.o_althuraya_invoice .o_trn_line {
-    margin-top: 4px;
-    font-size: 11px;
-}
-
-.o_althuraya_invoice .o_trn_label {
-    font-weight: 700;
-    color: #222;
-}
-
-.o_althuraya_invoice .o_trn_value {
-    font-weight: 400;
-    color: #222;
 }
 
 .o_althuraya_invoice .o_inv_lines thead th {
@@ -163,39 +160,11 @@
     border-color: #b8860b;
 }
 
-.o_althuraya_invoice .o_inv_header_row {
-    margin-bottom: 8px;
-}
-
-.o_althuraya_invoice .o_inv_company_logo,
-.o_althuraya_invoice .o_inv_letter_head {
-    width: 100%;
-    max-height: 95px;
-    object-fit: contain;
-    display: block;
-}
-
-.o_althuraya_invoice .o_inv_company_logo {
-    object-position: left center;
-}
-
-.o_althuraya_invoice .o_inv_letter_head {
-    object-position: right center;
-}
-
 .o_althuraya_invoice .o_inv_footer_content img {
     max-width: 100%;
     width: 100%;
     height: auto;
     display: block;
-}
-
-.o_althuraya_invoice .o_to_from_box {
-    margin-bottom: 10px;
-}
-
-.o_althuraya_invoice .o_to_from_box strong {
-    font-size: 12px;
 }
 
 .o_althuraya_invoice .o_payment_communication,

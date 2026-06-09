@@ -80,7 +80,8 @@
 }
 
 .o_althuraya_invoice .o_inv_number_meta_block {
-    max-width: 62%;
+    width: 100%;
+    max-width: 100%;
     margin-bottom: 12px;
 }
 
@@ -138,6 +139,24 @@
     color: #444;
 }
 
+.o_althuraya_invoice .o_inv_lines_wrapper {
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.o_althuraya_invoice .o_inv_lines {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0 !important;
+}
+
+.o_althuraya_invoice .o_inv_lines::before {
+    display: none !important;
+    border: none !important;
+}
+
 .o_althuraya_invoice .o_inv_lines thead th {
     background-color: #c9a227;
     color: #fff;
@@ -159,6 +178,23 @@
     background-color: #fafafa;
 }
 
+.o_althuraya_invoice .o_totals_table_wrapper {
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.o_althuraya_invoice .o_totals_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0 !important;
+}
+
+.o_althuraya_invoice .o_totals_table::before {
+    display: none !important;
+    border: none !important;
+}
+
 .o_althuraya_invoice .o_bottom_section {
     margin-top: 4px;
 }
@@ -177,6 +213,10 @@
     color: #fff;
     font-weight: 700;
     border-color: #b8860b;
+}
+
+.o_althuraya_invoice .o_totals_table tr.o_amount_due_row td {
+    font-weight: 700;
 }
 
 .o_althuraya_invoice .o_inv_footer_content img {

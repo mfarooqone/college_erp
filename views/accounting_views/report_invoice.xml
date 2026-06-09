@@ -55,7 +55,8 @@
                   </div>
                </div>
 
-               <table class="table table-sm o_inv_lines mb-3">
+               <div class="o_inv_lines_wrapper">
+               <table class="table table-sm o_inv_lines o_ignore_layout_styling table-borderless mb-0">
                   <thead>
                      <tr>
                         <th class="text-center" style="width:4%;">SR.</th>
@@ -87,6 +88,7 @@
                      </tr>
                   </tbody>
                </table>
+               </div>
 
                <t t-set="inv_taxes" t-value="o.invoice_line_ids.mapped('tax_ids').filtered(lambda t: t.amount_type == 'percent')"/>
                <t t-set="invoice_bank" t-value="o.partner_bank_id or o.company_id.partner_id.bank_ids[:1]"/>
@@ -105,7 +107,8 @@
                      </div>
                   </div>
                   <div class="col-5">
-                     <table class="table table-sm o_totals_table w-100">
+                     <div class="o_totals_table_wrapper">
+                     <table class="table table-sm o_totals_table o_ignore_layout_styling table-borderless w-100 mb-0">
                         <tr>
                            <td>Untaxed Amount</td>
                            <td class="text-end">
@@ -131,7 +134,33 @@
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                            </td>
                         </tr>
+                        <t t-if="print_with_payments">
+                           <t t-if="o.payment_state != 'invoicing_legacy'">
+                              <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
+                              <t t-foreach="payments_vals" t-as="payment_vals">
+                                 <tr t-if="payment_vals['is_exchange'] == 0">
+                                    <td>
+                                       <t t-if="payment_vals['is_refund']">Reversed on </t>
+                                       <t t-else="">Paid on </t>
+                                       <span t-out="payment_vals['date'] and payment_vals['date'].strftime('%d-%m-%Y') or ''"/>
+                                    </td>
+                                    <td class="text-end">
+                                       <span t-out="payment_vals['amount']"
+                                             t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                 </tr>
+                              </t>
+                              <tr t-if="len(payments_vals) > 0" class="o_amount_due_row">
+                                 <td>Amount Due</td>
+                                 <td class="text-end">
+                                    <span t-field="o.amount_residual"
+                                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                 </td>
+                              </tr>
+                           </t>
+                        </t>
                      </table>
+                     </div>
                   </div>
                </div>
 

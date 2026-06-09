@@ -35,6 +35,8 @@ class AccountMoveLine(models.Model):
         'move_id.invoice_line_ids.display_type',
     )
     def _compute_sr_no(self):
+        for line in self:
+            line.sr_no = 0
         self._recompute_sr_no_for_moves(self.mapped('move_id'))
 
     @api.model_create_multi

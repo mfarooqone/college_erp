@@ -40,15 +40,15 @@
 
                <div class="o_inv_number_meta_block mb-3">
                   <div class="o_inv_meta_box">
-                     <table class="o_inv_meta_table w-100">
+                     <table class="o_inv_meta_table o_ignore_layout_styling table table-borderless mb-0">
                         <tr>
-                           <td class="o_meta_cell">
+                           <td class="o_meta_cell o_meta_cell_invoice_date">
                               <div class="o_meta_label">Invoice Date</div>
-                              <div class="o_meta_value" t-field="o.invoice_date"/>
+                              <div class="o_meta_value" t-out="o.invoice_date and o.invoice_date.strftime('%d-%m-%Y') or ''"/>
                            </td>
-                           <td class="o_meta_cell">
+                           <td class="o_meta_cell o_meta_cell_due_date">
                               <div class="o_meta_label">Due Date</div>
-                              <div class="o_meta_value" t-field="o.invoice_date_due"/>
+                              <div class="o_meta_value" t-out="o.invoice_date_due and o.invoice_date_due.strftime('%d-%m-%Y') or ''"/>
                            </td>
                         </tr>
                      </table>
